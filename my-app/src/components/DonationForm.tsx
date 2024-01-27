@@ -5,7 +5,7 @@ interface DonationFormProps {
   onSubmit: (donation: Donation) => void;
 }
 
-interface Donation {
+export interface Donation {
   donorName: string;
   donationType: string;
   quantity: number;
@@ -20,7 +20,7 @@ const DonationForm: React.FC<DonationFormProps> = ({ onSubmit }) => {
     date: "",
   });
 
-  const inputChange = (e: React.ChangeEvent<HTMLElement>) => {
+  const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDonation({ ...donation, [e.target.name]: e.target.value });
   };
 
@@ -39,7 +39,7 @@ const DonationForm: React.FC<DonationFormProps> = ({ onSubmit }) => {
     <div>
       <TextField
         label="Donor Name"
-        name="donerName"
+        name="donorName"
         value={donation.donorName}
         onChange={inputChange}
       />

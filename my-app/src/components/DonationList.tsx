@@ -4,7 +4,7 @@ import { List, ListItem, ListItemText } from "@mui/material";
 interface DonationListProps {
   donations: Donation[];
 }
-interface Donation {
+export interface Donation {
   donorName: string;
   donationType: string;
   quantity: number;
@@ -12,18 +12,15 @@ interface Donation {
 }
 
 const DonationList: React.FC<DonationListProps> = ({ donations }) => {
-  return (
-    <List>
-      {donations.map((donation, index) => {
-        <ListItem key={index}>
-          <ListItemText
-            primary={`${donation.donorName} - ${donation.donationType} - ${donation.quantity}`}
-            secondary={`Date: ${donation.date}`}
-          />
-        </ListItem>;
-      })}
-    </List>
+  const renderRow = (donation: Donation, index: number) => (
+    <ListItem key={index}>
+      <ListItemText
+        primary={`${donation.donorName} - ${donation.donationType} - ${donation.quantity}`}
+        secondary={`Date: ${donation.date}`}
+      />
+    </ListItem>
   );
+  return <List>{donations.map(renderRow)}</List>;
 };
 
 export default DonationList;

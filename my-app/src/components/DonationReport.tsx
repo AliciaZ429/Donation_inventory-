@@ -6,11 +6,11 @@ interface DonationReportProps {
   donorReport: DonorReport;
 }
 
-interface InventoryReport {
+export interface InventoryReport {
   [type: string]: number;
 }
 
-interface DonorReport {
+export interface DonorReport {
   [donorName: string]: number;
 }
 
@@ -18,20 +18,17 @@ const DonationReport: React.FC<DonationReportProps> = ({
   inventoryReport,
   donorReport,
 }) => {
+  const renderRow = (entries: [string, number][]) => {
+    return entries.map(([key, value]) => (
+      <li key={key}>{`${key}:${value}`}</li>
+    ));
+  };
   return (
     <Paper>
       <Typography variant="h5">Inventory Report</Typography>
-      <ul>
-        {Object.entries(inventoryReport).map(([type, quantity]) => {
-          <li key={type}>{`${type}:${quantity}`}</li>;
-        })}
-      </ul>
+      <ul>{renderRow(Object.entries(inventoryReport))}</ul>
       <Typography variant="h5">Donor Report</Typography>
-      <ul>
-        {Object.entries(donorReport).map(([donorName, quantity]) => {
-          <li key={donorName}>{`${donorName}:${quantity}`}</li>;
-        })}
-      </ul>
+      <ul>{renderRow(Object.entries(donorReport))}</ul>
     </Paper>
   );
 };

@@ -1,33 +1,38 @@
 import React, { useState } from "react";
-import DonationForm from "./components/DonationForm";
+import DonationForm, { Donation } from "./components/DonationForm";
 import DonationList from "./components/DonationList";
-import DonationReport from "./components/DonationReport";
+import DonationReport, {
+  InventoryReport,
+  DonorReport,
+} from "./components/DonationReport";
 import "./App.css";
 
 const App: React.FC = () => {
   // set up all the states
   const [donations, setDonations] = useState<Donation[]>([]);
-  const [inventoryReport, setInventoryReport] = useState<DonationReport>([]);
-  const [donorReport, setDonorReport] = useState<DonationReport>([]);
+  const [inventoryReport, setInventoryReport] = useState<InventoryReport>({});
+  const [donorReport, setDonorReport] = useState<DonorReport>({});
 
-  const handleDonationSubmit = (newDonation: Donation)=>{
-    setDonations([...donations,newDonation]);
-    updateReports(newDonation;)
-  }
+  const handleDonationSubmit = (newDonation: Donation) => {
+    setDonations([...donations, newDonation]);
+    updateReports(newDonation);
+  };
 
-  const updateReports = (donation:Donation)=>{
-    setInventoryReport((prevReport:DonationReport)=>{
-      const newReport = {...prevReport};
-      newReport[donation.donationType] = (newReport[donation.donationType]||0) + donation.quantity;
+  const updateReports = (donation: Donation) => {
+    setInventoryReport((prevReport: InventoryReport) => {
+      const newReport = { ...prevReport };
+      newReport[donation.donationType] =
+        (newReport[donation.donationType] || 0) + donation.quantity;
       return newReport;
     });
 
-    setDonorReport((prevReport:DonationReport)=>{
-      const newReport = {...prevReport};
-      newReport[donation.donorName] = (newReport[donation.donorName]||0) + donation.quantity;
+    setDonorReport((prevReport: DonorReport) => {
+      const newReport = { ...prevReport };
+      newReport[donation.donorName] =
+        (newReport[donation.donorName] || 0) + donation.quantity;
       return newReport;
     });
-  }
+  };
 
   return (
     <div className="App">
@@ -35,9 +40,12 @@ const App: React.FC = () => {
         <h1>hello bro</h1>
       </header>
       <div>
-        <DonationForm onSubmit={handleDonationSubmit}/>
+        <DonationForm onSubmit={handleDonationSubmit} />
         <DonationList donations={donations} />
-        <DonationReport inventoryReport={inventoryReport} donorReport={donorReport} />
+        <DonationReport
+          inventoryReport={inventoryReport}
+          donorReport={donorReport}
+        />
       </div>
     </div>
   );
